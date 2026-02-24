@@ -1,0 +1,22 @@
+[
+  {
+    "team": "Dire",
+    "characters": [
+      "Sven",
+      "Sniper",
+      "Zeus",
+      "Dragon Knight",
+      "Lich"
+    ]
+  },
+  {
+    "team": "Radiant",
+    "characters": [
+      "Phantom Assassin",
+      "Vengeful Spirit",
+      "Earthshaker",
+      "Juggernaut",
+      "Death Prophet"
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+
+###
+# curl -X POST http://localhost:8080/api/collage 
+#  -H "Content-Type: application/json" 
+#  -d '[{"team":"Dire","characters":["Sven","Sniper","Zeus","Dragon Knight","Lich"]},{"team":"Radiant","characters":["Phantom Assassin","Vengeful Spirit","Earthshaker","Juggernaut","Death Prophet"]}]' 
+#  --output collage.png
+POST http://localhost:8080/api/collage
+Content-Type: application/json
+
+[
+  {
+    "team": "Dire",
+    "characters": [
+      "Sven",
+      "Sniper",
+      "Zeus",
+      "Dragon Knight",
+      "Lich"
+    ]
+  },
+  {
+    "team": "Radiant",
+    "characters": [
+      "Phantom Assassin",
+      "Vengeful Spirit",
+      "Earthshaker",
+      "Juggernaut",
+      "Death Prophet"
+    ]
+  }
+]
+
+###
