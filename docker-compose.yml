@@ -1,7 +1,17 @@
-version: '3.9'
 services:
+  eureka-server:
+    image: steeltoeoss/eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+    restart: unless-stopped
+
   collage-service:
     build: .
+    container_name: collage-service
     ports:
       - "8080:8080"
     restart: unless-stopped

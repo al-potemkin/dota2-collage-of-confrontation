@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,12 @@ public class CollageService {
         BufferedImage mask = imageLoader.loadMask();
 
         return collageComposer.compose(direImages, radiantImages, mask);
+    }
+
+    public String generateInBase64(List<TeamRequest> teams) {
+        byte[] result = generate(teams);
+        log.info("Collage generated successfully, size={} bytes", result.length);
+        return Base64.getEncoder().encodeToString(result);
     }
 
     /**
