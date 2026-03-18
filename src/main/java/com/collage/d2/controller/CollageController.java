@@ -20,16 +20,13 @@ public class CollageController {
 
     private final CollageService collageService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = "image/png")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] generateCollage(@RequestBody List<TeamRequest> teams) {
         log.info("Received collage request for {} teams", teams.size());
-
-        byte[] result = collageService.generate(teams);
-        log.info("Collage generated successfully, size={} bytes", result.length);
-        return result;
+        return collageService.generate(teams);
     }
 
-    @PostMapping(path = "/base64", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/base64", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public String generateCollageInBase64(@RequestBody List<TeamRequest> teams) {
         log.info("Received collage request for {} teams in base64", teams.size());
         return collageService.generateInBase64(teams);

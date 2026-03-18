@@ -28,13 +28,13 @@ public class CollageService {
         List<BufferedImage> radiantImages = resolveTeam(teams, "Radiant");
         BufferedImage mask = imageLoader.loadMask();
 
-        return collageComposer.compose(direImages, radiantImages, mask);
+        byte[] result = collageComposer.compose(direImages, radiantImages, mask);
+        log.info("Collage generated successfully, size={} bytes", result.length);
+        return result;
     }
 
     public String generateInBase64(List<TeamRequest> teams) {
-        byte[] result = generate(teams);
-        log.info("Collage generated successfully, size={} bytes", result.length);
-        return Base64.getEncoder().encodeToString(result);
+        return Base64.getEncoder().encodeToString(generate(teams));
     }
 
     /**
