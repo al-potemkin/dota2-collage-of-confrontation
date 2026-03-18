@@ -61,10 +61,10 @@ src/main/
 
 ### `POST /api/collage`
 
-| | |
-|---|---|
+|                  | Media Type         |
+|------------------|--------------------|
 | **Content-Type** | `application/json` |
-| **Produces** | `image/png` |
+| **Produces**     | `image/png`        |
 
 #### Request Body
 
@@ -93,35 +93,56 @@ src/main/
 ]
 ```
 
-Both fields — `team` and `characters` — are optional. The service applies graceful fallback for any missing or invalid data (see Fallback Logic below).
+Both fields — `team` and `characters` — are optional. The service applies graceful fallback for any missing or invalid
+data (see Fallback Logic below).
 
-See [`request_example.http`](src/main/resources/request_example.http) and [`request_example.json`](src/main/resources/request_example.json) for ready-to-use examples.
+See [`request_example.http`](src/main/resources/request_example.http) and [
+`request_example.json`](src/main/resources/request_example.json) for ready-to-use examples.
 
 #### Response
 
-| Status | Description |
-|---|---|
-| `200 OK` | PNG binary image |
-| `400 Bad Request` | Malformed JSON or field-level validation error |
+| Status                      | Description                                       |
+|-----------------------------|---------------------------------------------------|
+| `200 OK`                    | PNG binary image                                  |
+| `400 Bad Request`           | Malformed JSON or field-level validation error    |
+| `500 Internal Server Error` | `default.png` not found or image encoding failure |
+
+### `POST /api/collage/base64`
+
+- The request returns a base 64-encoded image as text. It accepts data in the same format as in request
+  `POST /api/collage`.
+
+|                  | Media Type         |
+|------------------|--------------------|
+| **Content-Type** | `application/json` |
+| **Produces**     | `text/plain`       |
+
+#### Response
+
+| Status                      | Description                                       |
+|-----------------------------|---------------------------------------------------|
+| `200 OK`                    | base 64-encoded image                             |
+| `400 Bad Request`           | Malformed JSON or field-level validation error    |
 | `500 Internal Server Error` | `default.png` not found or image encoding failure |
 
 ---
 
 ## Fallback Logic
 
-The service never returns an error due to missing or incomplete team data — every unresolvable slot is filled with `default.png`.
+The service never returns an error due to missing or incomplete team data — every unresolvable slot is filled with
+`default.png`.
 
-| Situation | Behaviour |
-|---|---|
-| JSON is empty / no teams provided | Both rows → `default.png` |
-| Only one team present | Found team loads normally, missing team → `default.png` |
-| More than 2 teams | `Dire` and `Radiant` entries are used if present, absent ones → `default.png` |
-| `team` field is absent, `null`, or blank | That team is treated as not found → entire row → `default.png` |
-| `characters` field is absent, `null`, or empty list | Entire row for that team → `default.png` |
-| More than 5 characters in a team | First 5 slots are used, the rest are ignored |
-| Fewer than 5 characters in a team | Available characters load normally, remaining slots → `default.png` |
-| Character name has no matching image file | That slot → `default.png`, processing continues |
-| `default.png` itself not found | `500 Internal Server Error` |
+| Situation                                           | Behaviour                                                                     |
+|-----------------------------------------------------|-------------------------------------------------------------------------------|
+| JSON is empty / no teams provided                   | Both rows → `default.png`                                                     |
+| Only one team present                               | Found team loads normally, missing team → `default.png`                       |
+| More than 2 teams                                   | `Dire` and `Radiant` entries are used if present, absent ones → `default.png` |
+| `team` field is absent, `null`, or blank            | That team is treated as not found → entire row → `default.png`                |
+| `characters` field is absent, `null`, or empty list | Entire row for that team → `default.png`                                      |
+| More than 5 characters in a team                    | First 5 slots are used, the rest are ignored                                  |
+| Fewer than 5 characters in a team                   | Available characters load normally, remaining slots → `default.png`           |
+| Character name has no matching image file           | That slot → `default.png`, processing continues                               |
+| `default.png` itself not found                      | `500 Internal Server Error`                                                   |
 
 ---
 
@@ -156,7 +177,7 @@ java -jar target/collage_of_confrontation-*.jar
 ### Docker
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
 Service will be available at `http://localhost:8080`.

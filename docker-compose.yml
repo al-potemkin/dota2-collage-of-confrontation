@@ -1,7 +1,8 @@
-version: '3.9'
 services:
-  collage-service:
+  d2collage-service:
     build: .
+    container_name: d2collage-service
+    image: d2collage-service:latest
     ports:
       - "8080:8080"
     restart: unless-stopped
